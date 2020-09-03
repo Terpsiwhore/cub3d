@@ -33,16 +33,15 @@ void 			print_square(t_data *img, int y, int x, int size, int color)
 {
 	int x_start;
 
+	y *= size;
+	x *= size;
 	x_start = x;
-	while (y % size != 0)
+	while (++y % size != 0)
 	{
 		x = x_start;
-		while (x % size != 0)
-		{
-			my_mlx_pixel_put(img, x, y, color);
-			++x;
-		}
-		++y;
+		while (++x % size != 0)
+			my_mlx_pixel_put(img, x - 1, y - 1, color);
+		my_mlx_pixel_put(img, x - 1, y - 1, color);
 	}
 }
 
@@ -72,8 +71,8 @@ void 			create_win(t_map map)
 	t_data  img;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-	img.img = mlx_new_image(mlx, 500, 500);
+	mlx_win = mlx_new_window(mlx, 1000, 1000, "Hello world!");
+	img.img = mlx_new_image(mlx, 1000, 1000);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								 &img.endian);
 	create_image(&img, map);
